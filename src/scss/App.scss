@@ -1,0 +1,17 @@
+@import "@material/button/mdc-button";
+@import "@material/dialog/mdc-dialog";
+
+.foo-button {
+    @include mdc-button-ink-color(white);
+    @include mdc-states(white);
+}
+
+.my-card {
+    height: 350px;
+    width: 350px;
+}
+
+body {
+    background: #fff;
+    color: #000;
+}

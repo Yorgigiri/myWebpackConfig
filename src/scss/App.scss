@@ -2,8 +2,8 @@
 @import "@material/dialog/mdc-dialog";
 
 .foo-button {
-    @include mdc-button-ink-color(white);
-    @include mdc-states(white);
+    @include mdc-button-ink-color(red);
+    @include mdc-states(black);
 }
 
 .my-card {

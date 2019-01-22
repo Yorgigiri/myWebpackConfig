@@ -1,6 +1,12 @@
 let path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
+const PATHS = {
+    src: path.join(__dirname, 'src'),
+    dist: path.join(__dirname, 'dist')
+};
 
 module.exports = {
     // entry: './src/index.js',
@@ -9,21 +15,61 @@ module.exports = {
     //     filename: 'bundle.js',
     //     path: path.resolve(__dirname, 'dist')
     // },
+
     entry: {
-        homePage: './src/pages/homePage/index.js',
-        pageOne: './src/pages/pageOne/index.js',
-        pageTwo: './src/pages/pageTwo/index.js'
+        homePage: PATHS.src + '/pages/homePage/index.js',
+        pageOne: PATHS.src + '/pages/pageOne/index.js',
+        pageTwo: PATHS.src + '/pages/pageTwo/index.js'
     },
-
     output: {
-        // path: __dirname + '/dist/pages'
-        path: path.resolve(__dirname, './dist/pages'),
-        // filename: '[name].js',
-        filename: './../js/[name].js',
-        publicPath: ''
-        
+        path: PATHS.dist,
+        filename: 'js/[name].js'
     },
 
+    // entry: {
+    //     homePage: './src/pages/homePage/index.js',
+    //     pageOne: './src/pages/pageOne/index.js',
+    //     pageTwo: './src/pages/pageTwo/index.js'
+    // },
+
+    // output: {
+    //     // path: __dirname + '/dist/pages'
+    //     path: path.resolve(__dirname, './dist'),
+    //     // filename: '[name].js',
+    //     filename: './js/pages/[name].js',
+    //     publicPath: ''
+
+    // },
+
+    // optimization: {
+    //     minimizer: [
+    //         new UglifyJsPlugin({
+    //             test: /\.js(\?.*)?$/i,
+    //         }),
+    //     ],
+    // },
+
+    plugins: [
+        new ExtractTextPlugin('main.css'),
+        new HtmlWebpackPlugin({
+            title: 'Home page',
+            filename: 'index.html',
+            chunks: ['homePage'],
+            template: PATHS.src + '/pages/homePage/index.pug'
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Page One',
+            filename: 'pageOne.html',
+            chunks: ['pageOne'],
+            template: PATHS.src + '/pages/pageOne/index.pug'
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Page Two',
+            filename: 'pageTwo.html',
+            chunks: ['pageTwo'],
+            template: PATHS.src + '/pages/pageTwo/index.pug'
+        })
+    ],
     module: {
         rules: [
             {
@@ -34,6 +80,13 @@ module.exports = {
                     options: {
                         presets: ['@babel/preset-env', '@babel/preset-react']
                     }
+                }
+            },
+            {
+                test: /\.pug$/,
+                loader: 'pug-loader',
+                options: {
+                    pretty: true
                 }
             },
             {
@@ -55,27 +108,6 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new ExtractTextPlugin('main.css'),
-        new HtmlWebpackPlugin({
-            title: 'Home page',
-            filename: 'homepage/index.html',
-            template: './src/pages/homePage/index.html',
-            chunks: ['homePage']
-        }),
-        new HtmlWebpackPlugin({
-            title: 'Page One',
-            filename: 'pageone/index.html',
-            template: './src/pages/pageOne/index.html',
-            chunks: ['pageOne']
-        }),
-        new HtmlWebpackPlugin({
-            title: 'Page Two',
-            filename: 'pagetwo/index.html',
-            template: './src/pages/pageTwo/index.html',
-            chunks: ['pageTwo']
-        })
-    ],
     devServer: {
         stats: 'errors-only'
     }

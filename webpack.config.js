@@ -1,7 +1,6 @@
 let path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const PATHS = {
     src: path.join(__dirname, 'src'),
@@ -9,12 +8,6 @@ const PATHS = {
 };
 
 module.exports = {
-    // entry: './src/index.js',
-
-    // output: {
-    //     filename: 'bundle.js',
-    //     path: path.resolve(__dirname, 'dist')
-    // },
 
     entry: {
         homePage: PATHS.src + '/pages/homePage/index.js',
@@ -25,30 +18,6 @@ module.exports = {
         path: PATHS.dist,
         filename: 'js/[name].js'
     },
-
-    // entry: {
-    //     homePage: './src/pages/homePage/index.js',
-    //     pageOne: './src/pages/pageOne/index.js',
-    //     pageTwo: './src/pages/pageTwo/index.js'
-    // },
-
-    // output: {
-    //     // path: __dirname + '/dist/pages'
-    //     path: path.resolve(__dirname, './dist'),
-    //     // filename: '[name].js',
-    //     filename: './js/pages/[name].js',
-    //     publicPath: ''
-
-    // },
-
-    // optimization: {
-    //     minimizer: [
-    //         new UglifyJsPlugin({
-    //             test: /\.js(\?.*)?$/i,
-    //         }),
-    //     ],
-    // },
-
     plugins: [
         new ExtractTextPlugin('main.css'),
         new HtmlWebpackPlugin({
